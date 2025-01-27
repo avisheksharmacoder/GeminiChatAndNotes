@@ -8,6 +8,17 @@ from pathlib import Path
 # response text.
 gemini_response: str = ""
 
+# response configurations.
+response_configs = {
+    "KISAS": False,
+    "EIPs": False,
+}
+
+response_configs_values = {
+    "KISAS": "Keep it short and simple",
+    "EIPs": "Explain in points",
+}
+
 # models names.
 gemini_models = {
     "1.5": "gemini-1.5-flash-002",
@@ -52,6 +63,7 @@ def ask_gemini_with_audio() -> str:
     pass
 
 
+# Home page configurations for side bar.
 # set page title and icon.
 st.set_page_config(page_title="Gemini2.0", page_icon="👋")
 
@@ -59,8 +71,9 @@ st.set_page_config(page_title="Gemini2.0", page_icon="👋")
 st.sidebar.success("Welcome to Gemini 2.0 chat")
 
 
-# heading.
+# App heading.
 st.header("Ask Gemini and Learn")
+
 
 # checkbox for gemini 2.0 option.
 gemini_model2_checked = st.checkbox(
@@ -68,11 +81,21 @@ gemini_model2_checked = st.checkbox(
     help="Generate the prompt using latest Gemini 2.0 model",
 )
 
+
+# gemini prompt text input.
 gemini_prompt = st.text_input(
     label="Your query goes here",
     max_chars=500,
     help="Explain what you want, in simple words",
 )
+
+
+# keep reply short and simple checkbox.
+if st.checkbox("Keep it short and simple "):
+    response_configs["KISAS"] = True
+
+    # add it to the prompt, if checked.
+    gemini_prompt += response_configs_values["KISAS"]
 
 
 # ask gemini button.
