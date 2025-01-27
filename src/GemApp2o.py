@@ -71,8 +71,9 @@ gemini_model2_checked = st.checkbox(
 gemini_prompt = st.text_input(
     label="Your query goes here",
     max_chars=500,
-    help="Explain your prompt in the best way",
+    help="Explain what you want, in simple words",
 )
+
 
 # ask gemini button.
 if st.button(label="Ask", type="primary"):
