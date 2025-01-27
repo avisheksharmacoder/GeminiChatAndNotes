@@ -9,7 +9,7 @@ from pathlib import Path
 gemini_response: str = ""
 
 # response text splits for better UI.
-response_splits = ["random", "text"]
+response_splits = ["random", "_______"]
 
 # response configurations.
 response_configs = {
@@ -117,8 +117,11 @@ if st.button(label="Ask", type="primary"):
             gemini_prompt, model_name=gemini_models["1.5"]
         )
 
+    # show the response.
+    response_splits = gemini_response.split(".", 1)
+    st.success(response_splits[0])
 
-st.write(gemini_response)
+st.write(response_splits[1])
 
 # show the download button.
 st.button("Download into PDF", type="primary", icon="✔")
