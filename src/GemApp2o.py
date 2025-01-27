@@ -8,15 +8,13 @@ from pathlib import Path
 # response text.
 gemini_response: str = ""
 
+# response text splits for better UI.
+response_splits = ["random", "text"]
+
 # response configurations.
 response_configs = {
-    "KISAS": False,
-    "EIPs": False,
-}
-
-response_configs_values = {
     "KISAS": "Keep it short and simple",
-    "EIPs": "Explain in points",
+    "EIFPs": "Explain in points",
 }
 
 # models names.
@@ -90,12 +88,22 @@ gemini_prompt = st.text_input(
 )
 
 
-# keep reply short and simple checkbox.
-if st.checkbox("Keep it short and simple "):
-    response_configs["KISAS"] = True
+# Prompt augmentation.
+# Prompt augmentation options column.
+col1, col2 = st.columns(2)
 
+# prompt augmentation 1.
+# keep reply short and simple checkbox.
+if col1.checkbox("Keep it short and simple "):
     # add it to the prompt, if checked.
-    gemini_prompt += response_configs_values["KISAS"]
+    gemini_prompt += "\n" + response_configs["KISAS"]
+
+
+# Prompt augmentation part 2.
+# Explain in points.
+if col2.checkbox("Explain in few points"):
+    # add it to the prompt, if checked.
+    gemini_prompt += "\n" + response_configs["EIFPs"]
 
 
 # ask gemini button.
@@ -110,9 +118,7 @@ if st.button(label="Ask", type="primary"):
         )
 
 
-# show the response.
 st.write(gemini_response)
-
 
 # show the download button.
 st.button("Download into PDF", type="primary", icon="✔")
