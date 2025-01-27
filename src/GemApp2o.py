@@ -123,6 +123,7 @@ if st.button(label="Ask", type="primary"):
 
 st.write(response_splits[1])
 
+
 # show the download button.
 st.button("Download into PDF", type="primary", icon="✔")
 
