@@ -1,12 +1,13 @@
 # Basic setup.
 
-1. Install python 3.11, pip, poetry in main host environment.
+1. Install python 3.11, pip, poetry in main host environment. 
 2. Enter main folder - gemini20ChatApp.
 3. Open Terminal/CMD/Powershell in this folder.
 4. Install libraries - run "poetry install"
 5. Activate virtual environment - run "poetry shell"
 6. Enter src folder - run "cd src" in Terminal/CMD/Powershell.
-7. Run streamlit app - run "streamlit run GemApp2o.py"
+7. Inside src, make a folder named keys, make a file named .env and put your Gemini API key (from Gemimi Studio) in the variable as GEMINI_API_KEY. 
+8. Run streamlit app - run "streamlit run GemApp2o.py"
 
 # Features available.
 
