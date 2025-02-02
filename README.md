@@ -15,3 +15,4 @@
 3. Integrate PDF download = Not Available yet
 4. Integrate ORM for Reports = Not Available yet
 5. Download Chats as PDF = Not Available yet
+6. Edit Chats in History = Not Available yet
