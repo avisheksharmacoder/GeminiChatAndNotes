@@ -1,3 +1,5 @@
+# Gemini Chat and Note Application
+
 # Basic setup.
 
 1. Install python 3.11, pip, poetry in main host environment.
