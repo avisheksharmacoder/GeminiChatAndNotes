@@ -2,7 +2,7 @@
 
 # Basic setup.
 
-1. Install python 3.11, pip, poetry in main host environment. Poetry is used for dependency management.
+1. Install python 3.11, pip, poetry in main host environment.
 2. Enter main folder - gemini20ChatApp.
 3. Open Terminal/CMD/Powershell in this folder.
 4. Install libraries - run "poetry install"
