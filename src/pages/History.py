@@ -1,5 +1,6 @@
 import streamlit as st
 from fpdf import FPDF
+from pathlib import Path
 
 
 st.set_page_config(page_title="History", page_icon="👋")
@@ -45,3 +46,11 @@ if st.button("Generate PDF"):
     filename = "tests.pdf"
 
     pdf_write.output(filename)
+    with open(Path("../src/" + filename), "rb") as pdf_raw:
+        pdf_chats_byte_stream = pdf_raw.read()
+        st.download_button(
+            label="Download Final File",
+            data=pdf_chats_byte_stream,
+            file_name=filename,
+            mime="application/octet-stream",
+        )
