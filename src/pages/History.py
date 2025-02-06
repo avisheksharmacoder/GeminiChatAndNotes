@@ -29,7 +29,7 @@ st.write("All your prompts and responses with Gemini will appear here !")
 
 for p in prompts:
     expander = st.expander(p[1])
-    expander.text_area(label="Edit answer", value=p[1] + "This is the besst I can do")
+    expander.text_area(label="Edit answer", value=p[1] + "This is the best I can do")
     expander.checkbox("Choose to Download", key=p[0])
 
 
