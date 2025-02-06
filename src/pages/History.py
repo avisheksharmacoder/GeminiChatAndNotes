@@ -1,4 +1,6 @@
 import streamlit as st
+from fpdf import FPDF
+
 
 st.set_page_config(page_title="History", page_icon="👋")
 
@@ -34,4 +36,12 @@ for p in prompts:
 
 
 # This button will download all chats into pdf format.
-st.button("Download")
+if st.button("Generate PDF"):
+    pdf_write = FPDF()
+    pdf_write.add_page()
+    pdf_write.set_font("Arial", size=15)
+    pdf_write.cell(200, 10, txt="Here are your chats", ln=1, align="C")
+
+    filename = "tests.pdf"
+
+    pdf_write.output(filename)
