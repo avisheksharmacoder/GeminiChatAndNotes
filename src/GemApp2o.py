@@ -135,7 +135,7 @@ pdf_writer.set_font("Arial", size=15)
 pdf_writer.cell(200, 10, txt="Gemini Chats", ln=1, align="C")
 
 # show the prompt,
-pdf_writer.cell(200, 10, txt=gemini_prompt, ln=1, align="L")
+pdf_writer.cell(200, 10, txt=gemini_prompt.capitalize(), ln=1, align="L")
 
 # show the response.
 pdf_writer.multi_cell(
