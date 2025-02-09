@@ -3,6 +3,9 @@ import google.generativeai as genai
 import dotenv
 import os
 from pathlib import Path
+from datetime import datetime
+from pony import orm
+from fpdf import FPDF
 
 
 # response text.
@@ -11,7 +14,7 @@ gemini_response: str = ""
 # response text splits for better UI.
 response_splits = ["random", "_______"]
 
-# response configurations.
+# response augmentation configurations.
 response_configs = {
     "KISAS": "Keep it short and simple",
     "EIFPs": "Explain in points",
@@ -123,9 +126,46 @@ if st.button(label="Ask", type="primary"):
 
 st.write(response_splits[1])
 
+# we generate the pdf here silenty, using the current
+# prompt, response and current date time, for the user to download
+# just this prompt and response.
+pdf_writer = FPDF()
+pdf_writer.add_page()
+pdf_writer.set_font("Arial", size=15)
+pdf_writer.cell(200, 10, txt="Gemini Chats", ln=1, align="C")
 
-# show the download button.
-st.button("Download into PDF", type="primary", icon="✔")
+# show the prompt,
+pdf_writer.cell(200, 10, txt=gemini_prompt, ln=1, align="L")
+
+# show the response.
+pdf_writer.multi_cell(
+    200,
+    10,
+    txt=gemini_response,
+    align="L",
+)
+
+# This is the name of the pdf file, that will be saved.
+filename = "tests.pdf"
+
+# We temporarily write the file into local storage, then later
+# reload the pdf file in rb format.
+pdf_writer.output(filename)
+
+# Once the pdf file is generated, open the file in rb format and
+# generate the final download button, for the user to download
+# the pdf file from the browser, to a specific PC location.
+with open(Path("../src/" + filename), "rb") as pdf_raw:
+    pdf_chats_byte_stream = pdf_raw.read()
+
+    # we generate the final download button.
+    st.download_button(
+        label="Download into PDF",
+        data=pdf_chats_byte_stream,
+        file_name=filename,
+        mime="application/octet-stream",
+        icon="✔",
+    )
 
 
 # token details.
