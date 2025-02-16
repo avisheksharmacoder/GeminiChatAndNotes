@@ -1,12 +1,43 @@
 import streamlit as st
 from fpdf import FPDF
 from pathlib import Path
+from pony import orm
+import os
+
 
 # we set page configuration for Chat History page, with page title.
 st.set_page_config(page_title="History", page_icon="👋")
 
 # we set the sidebar message for History Tab in the app.
 st.sidebar.success("Download your Chats")
+
+
+# All code related to database.
+
+
+# We have to create a database file to store the prompts.
+# and responses. We will use pony orm for this purpose.
+# check if sqlite db is in folder or not.
+def sqlite_db_exists(filename: str, folder_path: str) -> bool:
+    file_path = Path(folder_path + "\\" + filename)
+    print(file_path)
+    return file_path.exists()
+
+
+# We create the database object to perform database operations.
+db = orm.Database()
+
+# This is the sqlite database file name.
+db_filename = "chat.db"
+
+# we bind the database that is already created from the main file
+current_dir = Path.cwd()
+db_dir = str(current_dir) + "\\sqlite_db\\"
+
+if sqlite_db_exists(db_filename, db_dir):
+    print("db exists")
+else:
+    print("db not found")
 
 prompts = [
     (0, "What is pectin? "),

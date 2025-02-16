@@ -39,6 +39,12 @@
 # response = gemini_model.generate_content("what is a gemini model?")
 # print(response.text)
 
-name = "this is the best game ever. I played it more than once. This is really good."
-print(name.find("."))
-print(name.split(".", 1))
+import pathlib
+
+paths = "./src/sqlite_db/test/"
+fils = "chat.db"
+filepath = pathlib.Path(paths + fils)
+if filepath.exists():
+    print("file is there")
+else:
+    print("file not there")
