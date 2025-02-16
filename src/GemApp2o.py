@@ -36,15 +36,18 @@ class Chat(db.Entity):
 
 # We have to bind database object, with db engine, file name and whether
 # to create the database file or not.
-if not sqlite_db_exists(db_filename, db_folder_path):
-    db_file_location = db_folder_path + "/" + db_filename
-    db.bind(provider="sqlite", filename=db_file_location, create_db=True)
+db_file_location = db_folder_path + "/" + db_filename
 
+if not sqlite_db_exists(db_filename, db_folder_path):
+    db.bind(provider="sqlite", filename=db_file_location, create_db=True)
     print("database file created !!")
+
     # We have to generate the tables to store data.
     db.generate_mapping(create_tables=True)
 else:
     print("database already exists !!")
+    db.bind(provider="sqlite", filename=db_file_location, create_db=True)
+    db.generate_mapping(create_tables=True)
 
 
 # response text.
@@ -159,11 +162,20 @@ if st.button(label="Ask", type="primary"):
             gemini_prompt, model_name=gemini_models["1.5"]
         )
 
+    # Create and save prompt, response and datetime of the current query.
+    with orm.db_session:
+        chat = Chat(
+            prompt=gemini_prompt,
+            prompt_response=gemini_response,
+            prompt_time=datetime.now(),
+        )
+
     # show the response.
     response_splits = gemini_response.split(".", 1)
     st.success(response_splits[0])
 
 st.write(response_splits[1])
+
 
 # we generate the pdf here silenty, using the current
 # prompt, response and current date time, for the user to download

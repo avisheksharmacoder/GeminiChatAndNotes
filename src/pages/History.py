@@ -11,6 +11,9 @@ st.set_page_config(page_title="History", page_icon="👋")
 # we set the sidebar message for History Tab in the app.
 st.sidebar.success("Download your Chats")
 
+# We check database file is present or not. If file is not available
+# then this variable is set to False. Else set to True.
+db_file_present: bool = False
 
 # All code related to database.
 
@@ -35,9 +38,11 @@ current_dir = Path.cwd()
 db_dir = str(current_dir) + "\\sqlite_db\\"
 
 if sqlite_db_exists(db_filename, db_dir):
-    print("db exists")
+    print("Databse file exists")
+    db_file_present = True
 else:
-    print("db not found")
+    print("Databse file not found")
+    db_file_present = False
 
 prompts = [
     (0, "What is pectin? "),
