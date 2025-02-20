@@ -18,4 +18,4 @@
 3. Integrate PDF download = Available on Gemini Chat Page
 4. Integrate Pony ORM for reports & chats = Available
 5. Download all chats as PDF = Not Available yet
-6. Edit chats in History page = Available
+6. Edit chats in History page = Available.
