@@ -1,8 +1,8 @@
 import streamlit as st
 from fpdf import FPDF
 from pathlib import Path
-from pony import orm
 import os
+import sqlite3
 
 
 # we set page configuration for Chat History page, with page title.
@@ -15,28 +15,28 @@ st.sidebar.success("Download your Chats")
 # then this variable is set to False. Else set to True.
 db_file_present: bool = False
 
+
 # All code related to database.
-
-
 # We have to create a database file to store the prompts.
-# and responses. We will use pony orm for this purpose.
-# check if sqlite db is in folder or not.
+# and responses.
+# We check if sqlite db is in the folder or not.
 def sqlite_db_exists(filename: str, folder_path: str) -> bool:
     file_path = Path(folder_path + "\\" + filename)
     print(file_path)
     return file_path.exists()
 
 
-# We create the database object to perform database operations.
-db = orm.Database()
-
 # This is the sqlite database file name.
 db_filename = "chat.db"
 
-# we bind the database that is already created from the main file
+# we bind the database that is already created from the GemChatApp file.
+# We find the current directory of the active python file.
 current_dir = Path.cwd()
+
+# We generate the sqlite database file location.
 db_dir = str(current_dir) + "\\sqlite_db\\"
 
+# To check if the database file already exists in the folder or not.
 if sqlite_db_exists(db_filename, db_dir):
     print("Databse file exists")
     db_file_present = True
@@ -44,27 +44,42 @@ else:
     print("Databse file not found")
     db_file_present = False
 
-prompts = [
-    (0, "What is pectin? "),
-    (1, "What is protein? explain brief"),
-    (2, "What is fat ??"),
-]
 
-
-def delete_record(i):
-    return prompts.pop(i)
-
-
+# The header for the History Page.
 st.header("Your Gemini Chat History")
 
-
+# The subheading for the History Page.
 st.write("All your prompts and responses with Gemini will appear here !")
 
+# We read the database and render the chats below in expanders.
+# User can edit the chats as per their usage.
+# test button to show streamlit expanders.
+if st.button("Generate Expanders"):
+    # To generate the database file path and connect to the database.
+    db_filepath = Path(db_dir + "\\" + db_filename)
 
-for p in prompts:
-    expander = st.expander(p[1])
-    expander.text_area(label="Edit answer", value=p[1] + "This is the best I can do")
-    expander.checkbox("Choose to Download", key=p[0])
+    # To connect to the database and create the database connection.
+    sqlite_db_conn = sqlite3.connect(db_filepath)
+
+    # To generate the sqlite database cursor to execute queries.
+    sqlite_db_cursor = sqlite_db_conn.cursor()
+
+    # To get all the records from the sql table Chat.
+    sqlite_db_cursor.execute(
+        """
+        SELECT * FROM Chat
+        """
+    )
+
+    # fetch all the records from the cursor.
+    chats = sqlite_db_cursor.fetchall()
+
+    # render the expanders for every chat. The user can see the contents of the chat
+    # and decide whether to redit the content or not.
+    for row in chats:
+        expander = st.expander(row[1])
+        expander.text_area(label="Edit answer", value=row[2])
+        expander.checkbox("Choose to Download", key=row[0])
 
 
 # To download the chats, we first generate the pdf. This button
