@@ -19,3 +19,6 @@
 4. Integrate Pony ORM for reports & chats = Available
 5. Download all chats as PDF = Not Available yet
 6. Edit chats in History page = Available.
+
+Homepage
+![Homepage](/gemini20ChatApp/Webapp%20images/Chat%20augmentations.PNG)
