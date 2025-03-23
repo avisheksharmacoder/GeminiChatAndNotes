@@ -20,5 +20,8 @@
 5. Download all chats as PDF = Not Available yet
 6. Edit chats in History page = Available.
 
-Homepage
-![Homepage](/gemini20ChatApp/Webapp%20images/Chat%20augmentations.PNG)
+### App images for reference.
+
+Gemini App Homepage
+
+![Homepage](Webapp%20images/Chat%20augmentations.PNG)
