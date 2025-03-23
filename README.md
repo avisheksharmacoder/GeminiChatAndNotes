@@ -24,4 +24,12 @@
 
 Gemini App Homepage
 
-![Homepage](Webapp%20images/Chat%20augmentations.PNG)
+![Homepage](Webapp%20images/Home.PNG)
+
+Gemini History
+
+![History](Webapp%20images/History.PNG)
+
+Gemini chat Augmentations
+
+![Chat Augmentations](Webapp%20images/Chat%20augmentations.PNG)
